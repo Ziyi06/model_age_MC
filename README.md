@@ -1,5 +1,5 @@
 # model_age_MC
-This package gives estimates on model ages and their uncertainties using Monte Carlo bootstrapping. [https://github.com/zidianjun/BOA_calculation](url)
+This package gives estimates on model ages and their uncertainties using Monte Carlo bootstrapping. 
 
 Manual:
 
