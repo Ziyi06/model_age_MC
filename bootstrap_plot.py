@@ -14,12 +14,12 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
            meas_err=True, mantle_hh_err=True, Lu_crust_err=True, 
            plot=False):
     '''
-    Calculate Hf modle ages and errors using bootstrapping.
+    Calculate Hf model ages and errors using bootstrapping.
 
     Parameters
     ----------
     u_pb_age: float or array-like
-        Measured zircon U-Pb age in unit of Gyr.
+        Measured zircon U-Pb age in a unit of Gyr.
 
     hf_hf: float or array-like
         Measured zircon 176Hf/177Hf.
@@ -28,7 +28,7 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         Measured zircon 176Lu/177Hf.
 
     oxygen: float or array-like, optional (defaulted 0)
-        Measured zircon δ18O in unit of ‰.
+        Measured zircon δ18O in a unit of ‰.
         Note that if this value is 0, crustal Lu/Hf will be constant values; 
         otherwise, crustal Lu/Hf will depend on measured δ18O values. 
 
@@ -40,7 +40,7 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         modern arc mantle)
         Modern mantle 176Hf/177Hf (either arc mantle or depleted mantle).
         Use float if there is only one preferred value.
-        Use tuple shape of (mean, std) if mean and standard deviation are known.
+        Use the tuple shape of (mean, std) if mean and standard deviation are known.
         Use array-like if a distribution is available (e.g., Iizuka et al. 2013).
     
     times: int, optional (defaulted 500)
