@@ -127,21 +127,7 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         ax.set_xlabel('U-Pb age (Ga)')
         ax.set_ylabel('$\epsilon$Hf(t)')
 
-        # plt.show()
-        plt.savefig('./figure/test1111.png', dpi=600)
+        plt.show()
+        plt.savefig('./figure/boostrap.pdf')
 
     return T_arr, eps_arr
-
-
-data = pd.read_excel('./data/all_europe_raw.xlsx', sheet_name="o_hf")
-    
-am_hf_hf = pd.read_csv('./data/hf_dist_392.csv')['176Hf_177Hf']
-iizuka = am_hf_hf[(am_hf_hf < np.percentile(am_hf_hf, 97.5))
-                & (am_hf_hf > np.percentile(am_hf_hf, 2.5))]
-
-T_boot(data[242:243].u_pb_age*1e-3, data[242:243].hf_hf, data[242:243].lu_hf, data[242:243].o,
-       u_pb_age_err=data[242:243].age_2se*1e-3/2, hf_hf_err=data[242:243].hf_hf_2se/2, 
-       lu_hf_err=data[242:243].lu_hf_2se/2, oxygen_err=data[242:243].o_sed,
-       mantle_hh=iizuka, times=5000, 
-       meas_err=1, mantle_hh_err=1, Lu_crust_err=1, 
-       plot=1)
