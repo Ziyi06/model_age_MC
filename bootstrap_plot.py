@@ -10,7 +10,7 @@ from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0, 
            u_pb_age_err=0, hf_hf_err=0, lu_hf_err=0, oxygen_err=0,
-           mantle_hh=c.am_hh, times=500, 
+           mantle_hh=c.am_hh, times=500, percentiles=(2.5, 97.5),
            meas_err=True, mantle_hh_err=True, Lu_crust_err=True, 
            plot=False):
     '''
@@ -45,6 +45,9 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
     
     times: int, optional (defaulted 500)
         Repetition times for bootstrapping, defaulted to be 5000.
+    
+    percentiles: tuple, optional (defaulted (2.5, 97.5))
+        Percentiles in the poterior distribution.
 
     meas_err: bool, optional (defaulted True)
         If True, the calculation of model age errors considers measurement error.
@@ -62,19 +65,22 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
 
     Returns
     -------
-    T_list: array
-        Calculated Hf model ages, with a length of times (defaulted to 500).
+    T_tuple: tuple
+        A tuple containing (T_50, T_p1, T_p2), where p1, p2 = percentiles.
+        T_p is the calculated p-th percentile of Hf model age(s) and
+        has the same shape as the inputs, from times of bootstrap trails.
     
-    epsilon_list: array
-        Calculated εHf(t), with a length of times (defaulted to 500). 
+    epsilon_tuple: tuple
+        A tuple containing (eps_50, eps_p1, eps_p2), where p1, p2 = percentiles.
+        eps_p is the calculated p-th percentile of εHf(t) and
+        has the same shape as the inputs, from times of bootstrap trails.
 
     '''
     if plot:
         plt.figure()
         ax = plt.subplot(111)
     
-    T_arr = np.zeros(times)
-    eps_arr = np.zeros(times)
+    T_list, eps_list = [], []
     for i in range(times):
         t = np.random.normal(u_pb_age, u_pb_age_err * meas_err)
         Hf = np.random.normal(hf_hf, hf_hf_err * meas_err)
@@ -96,8 +102,8 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
             Lu_crustal = np.where(t <= 2.5, c.ave_tuple[0], 0.) + np.where(t > 2.5, c.y1_tuple[0], 0.)
 
         T = solve_T(t, Hf, Lu, Hf_am=Hf_am, Lu_am=Lu_am, Lu_crustal=Lu_crustal)
-        T_arr[i] = T
-        eps_arr[i] = epsilon(t, Hf, Lu)
+        T_list.append(T)
+        eps_list.append(epsilon(t, Hf, Lu))
 
         if plot:
             x1 = np.arange(0, t, .001) # zircon 
@@ -113,21 +119,30 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
             ax.vlines(x=T, ymin=-50., ymax=epsilon(T, Hf_am, Lu_am), 
                         color='dimgrey', alpha=.01, lw=2, linestyle="-", zorder=3) # Model age intercepts
 
+    p1, p2 = percentiles
+    p0 = 50
     if plot:
         axins = inset_axes(ax, width="40%", height="40%", loc=4, borderpad=1.3)
-        axins.hist(T_arr, bins=30, linewidth=.8, histtype='step', color='k')
-        axins.axvline(x=np.percentile(T_arr, 50), ls='--', lw=1, color='k')
-        axins.axvline(x=np.percentile(T_arr, 2.5), ls='--', lw=1, color='k')
-        axins.axvline(x=np.percentile(T_arr, 97.5), ls='--', lw=1, color='k')
+        axins.hist(np.array(T_list), bins=30, linewidth=.8, histtype='step', color='k')
+        for q in [p0, p1, p2]:
+            axins.axvline(x=np.percentile(T_list, q), ls='--', lw=1, color='k')
         axins.tick_params(axis='both', which='major', length=1, labelsize=6, pad=1)
+        axins.set_xlim(0.85, 1.45)
     
+        ax.set_xlim(0, 4.)
+        ax.set_ylim(-30, 20)
         ax.set_xlabel('U-Pb age (Ga)')
         ax.set_ylabel('$\epsilon$Hf(t)')
 
         plt.show()
-        plt.savefig('./figure/bootstrap.pdf')
+        # plt.savefig('./figure/bootstrap.pdf')
 
-    return T_arr, eps_arr
+    return ((np.percentile(T_list, p0, axis=0),
+             np.percentile(T_list, p1, axis=0),
+             np.percentile(T_list, p2, axis=0)),
+            (np.percentile(eps_list, p0, axis=0),
+             np.percentile(eps_list, p1, axis=0),
+             np.percentile(eps_list, p2, axis=0)))
 
 ## Below is a demo
 data = pd.read_excel('./data/all_europe_raw.xlsx', sheet_name="o_hf")[242:243]
@@ -138,6 +153,6 @@ am_hf_hf = am_hf_hf[(am_hf_hf < np.percentile(am_hf_hf, 97.5))
 T_boot(data.u_pb_age*1e-3, data.hf_hf, data.lu_hf, data.o,
        u_pb_age_err=data.age_2se*1e-3/2, hf_hf_err=data.hf_hf_2se/2, 
        lu_hf_err=data.lu_hf_2se/2, oxygen_err=data.o_sed,
-       mantle_hh=am_hf_hf, times=5000, 
-       meas_err=1, mantle_hh_err=1, Lu_crust_err=1, 
-       plot=1)
+       mantle_hh=am_hf_hf, times=500, percentiles=(2.5, 97.5),
+       meas_err=True, mantle_hh_err=True, Lu_crust_err=True, 
+       plot=True)
