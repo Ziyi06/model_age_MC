@@ -47,7 +47,7 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         Repetition times for bootstrapping, defaulted to be 5000.
     
     percentiles: tuple, optional (defaulted (2.5, 97.5))
-        Percentiles in the poterior distribution.
+        Percentiles in the posterior distribution.
 
     meas_err: bool, optional (defaulted True)
         If True, the calculation of model age errors considers measurement error.
@@ -146,7 +146,9 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
 
 ## Below is a demo
 data = pd.read_excel('./data/all_europe_raw.xlsx', sheet_name="o_hf")[242:243]
-am_hf_hf = pd.read_csv('./data/hf_dist_392.csv')['176Hf_177Hf']
+
+#Distribution of arc mantle 176Hf/177Hf from Iizuka et al. 2013
+am_hf_hf = pd.read_csv('./data/hf_dist_392.csv')['176Hf_177Hf'] 
 am_hf_hf = am_hf_hf[(am_hf_hf < np.percentile(am_hf_hf, 97.5))
                 & (am_hf_hf > np.percentile(am_hf_hf, 2.5))]
 
