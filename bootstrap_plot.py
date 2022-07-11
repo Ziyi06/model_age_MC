@@ -128,3 +128,16 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         plt.savefig('./figure/bootstrap.pdf')
 
     return T_arr, eps_arr
+
+## Below is a demo
+data = pd.read_excel('./data/all_europe_raw.xlsx', sheet_name="o_hf")[242:243]
+am_hf_hf = pd.read_csv('./data/hf_dist_392.csv')['176Hf_177Hf']
+am_hf_hf = am_hf_hf[(am_hf_hf < np.percentile(am_hf_hf, 97.5))
+                & (am_hf_hf > np.percentile(am_hf_hf, 2.5))]
+
+T_boot(data.u_pb_age*1e-3, data.hf_hf, data.lu_hf, data.o,
+       u_pb_age_err=data.age_2se*1e-3/2, hf_hf_err=data.hf_hf_2se/2, 
+       lu_hf_err=data.lu_hf_2se/2, oxygen_err=data.o_sed,
+       mantle_hh=am_hf_hf, times=5000, 
+       meas_err=1, mantle_hh_err=1, Lu_crust_err=1, 
+       plot=1)
