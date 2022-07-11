@@ -125,6 +125,6 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         ax.set_ylabel('$\epsilon$Hf(t)')
 
         plt.show()
-        plt.savefig('./figure/boostrap.pdf')
+        plt.savefig('./figure/bootstrap.pdf')
 
     return T_arr, eps_arr
