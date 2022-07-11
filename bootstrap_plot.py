@@ -120,10 +120,7 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         axins.axvline(x=np.percentile(T_arr, 2.5), ls='--', lw=1, color='k')
         axins.axvline(x=np.percentile(T_arr, 97.5), ls='--', lw=1, color='k')
         axins.tick_params(axis='both', which='major', length=1, labelsize=6, pad=1)
-        axins.set_xlim(0.85, 1.45)
     
-        ax.set_xlim(0, 4.)
-        ax.set_ylim(-30, 20)
         ax.set_xlabel('U-Pb age (Ga)')
         ax.set_ylabel('$\epsilon$Hf(t)')
 
