@@ -5,4 +5,4 @@ This module provides a model age and a εHf(t) along with their errors, by boots
 
 T_boot() is the core function. The detailed parameter description can be found in the comments. Run "python bootstrap_plot.py" as a demo.
 
-If you already have an array containing a distribution 176Hf/177Hf of arc / depleted mantle, load it and set it to the parameter "mantle_hh" in T_boot(). If not, you can also leave it defaulted as Iizuka's result (AM). Note that the parameter plot can only be True when the inputs are all float. If the inputs are array-like, remember to switch it to False.
+If you already have an array containing a distribution 176Hf/177Hf of arc / depleted mantle, load it and set it to the parameter "mantle_hh" in T_boot(). If not, you can also leave it defaulted as a constant. Note that the parameter plot can only be True when the inputs are all float. If the inputs are array-like, remember to switch it to False.
