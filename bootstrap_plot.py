@@ -147,7 +147,9 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
 ## Below is a demo
 data = pd.read_excel('./data/all_europe_raw.xlsx', sheet_name="o_hf")[242:243]
 
-#Distribution of arc mantle 176Hf/177Hf from Iizuka et al. 2013
+#Distribution of arc mantle 176Hf/177Hf 
+#from Iizuka et al. 2013 (https://doi.org/10.1016/j.gca.2012.12.028)
+#or from Hao et al., 2022 (https://doi.org/10.1016/j.chemgeo.2022.120897)
 am_hf_hf = pd.read_csv('./data/hf_dist_392.csv')['176Hf_177Hf'] 
 am_hf_hf = am_hf_hf[(am_hf_hf < np.percentile(am_hf_hf, 97.5))
                 & (am_hf_hf > np.percentile(am_hf_hf, 2.5))]
