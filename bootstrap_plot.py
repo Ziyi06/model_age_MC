@@ -157,6 +157,6 @@ am_hf_hf = am_hf_hf[(am_hf_hf < np.percentile(am_hf_hf, 97.5))
 T_boot(data.u_pb_age*1e-3, data.hf_hf, data.lu_hf, data.o,
        u_pb_age_err=data.age_2se*1e-3/2, hf_hf_err=data.hf_hf_2se/2, 
        lu_hf_err=data.lu_hf_2se/2, oxygen_err=data.o_sed,
-       mantle_hh=am_hf_hf, times=500, percentiles=(2.5, 97.5),
+       mantle_hh=am_hf_hf, times=5000, percentiles=(2.5, 97.5),
        meas_err=True, mantle_hh_err=True, Lu_crust_err=True, 
        plot=True)
