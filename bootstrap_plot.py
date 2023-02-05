@@ -135,7 +135,7 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         ax.set_ylabel('$\epsilon$Hf(t)')
 
         plt.show()
-        # plt.savefig('./figure/example.pdf')
+        # plt.savefig('./figure/bootstrap.pdf')
 
     return ((np.percentile(T_list, p0, axis=0),
              np.percentile(T_list, p1, axis=0),
