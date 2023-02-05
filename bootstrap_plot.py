@@ -36,7 +36,7 @@ def T_boot(u_pb_age, hf_hf, lu_hf, oxygen=0,
         (defaulted 0)
         Measurement 1 standard errors. 
 
-    mantle_hh: float, tuple, or array-like, optional (defaulted 0.283160 for 
+    mantle_hh: float, tuple, or array-like, optional (defaulted 0.2831705 for 
         modern arc mantle)
         Modern mantle 176Hf/177Hf (either arc mantle or depleted mantle).
         Use float if there is only one preferred value.
