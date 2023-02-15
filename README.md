@@ -1,5 +1,5 @@
 # model_age_MC
-This module implements the Monte Carlo bootstrapping method to calculate zircon Hf model ages and their uncertainties, as proposed by Zhu et al. in submission.
+This module implements the Monte Carlo bootstrapping method to calculate zircon Hf model ages and their uncertainties, as proposed by Zhu et al. (2023) [DOI: 10.1016/j.gca.2023.02.005].
 
 This module calculates zircon Hf model ages and their uncertainties by taking into account (i) uncertainty in the Hf isotopic composition of the mantle reservoir, (ii) uncertainty in the 176Lu/177Hf for the crustal source region, and (iii) uncertainty in measurements. The user can choose which uncertainty(s) to include. The minimum data required is a zircon U-Pb age, a 176Hf/177Hf, and a 176Lu/177Hf.
 
